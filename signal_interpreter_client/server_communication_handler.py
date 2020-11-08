@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # server_communication_handler.py
 import json
 from requests import post
