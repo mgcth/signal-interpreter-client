@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import argparse
 from server_communication_handler import post_message
 
