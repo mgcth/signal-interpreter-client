@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 import argparse
-from server_communication_handler import post_message
+from interprate import get_interpretation
+from consts import *
 
-signal = "signal"
-parser = argparse.ArgumentParser()
-parser.add_argument("--{}".format(signal), required = True)
-args = parser.parse_args()
+def main():
+    args = get_args()
+    title = get_interpretation(args.signal)
+    print(title)
 
-payload = {
-    signal: args.signal
-}
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--{}".format(SIGNAL), required=True)
+    return parser.parse_args()
 
-post_message("http://127.0.0.1:5000", payload)
+if __name__ == "__main__":
+    main()
