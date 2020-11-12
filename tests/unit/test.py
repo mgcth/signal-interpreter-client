@@ -25,14 +25,13 @@ def test_get_args_test():
 @patch("builtins.print")
 @patch("main.get_interpretation")
 @patch("main.get_args")
-def test_main_test(mock_print, mock_get_args, mock_get_interpretation):
+def test_main_test(mock_get_args, mock_get_interpretation, mock_print):
     signal = "11"
     args = {"signal": signal}
     mock_get_args.return_value = args
-    #mock_get_interpretation.return_value = signal
+    mock_get_interpretation.return_value = signal
 
     main()
 
-    #mock_get_args.assert_called_with(None) # can't call with empty call
-    mock_get_interpretation.assert_called_with(mock_get_args.return_value) # this is wrong, should be args.signal
-    #assert mock_print.mock_calls == [call('11')] # should we test the print somehow?
+    mock_get_interpretation.assert_called_with("11")
+    assert mock_print.mock_calls == [call('11')]

@@ -5,7 +5,7 @@ from consts import *
 
 def main():
     args = get_args()
-    title = get_interpretation(args.signal)
+    title = get_interpretation(args["signal"])
     print(title)
 
 def get_args():
