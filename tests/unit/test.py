@@ -22,12 +22,17 @@ def test_post_message_test(mock_post):
 def test_get_args_test():
     assert get_args() == Namespace(signal="11")
 
-# how?
 @patch("builtins.print")
-@patch(main.get_interpretation)
-@patch(main.get_args)
+@patch("main.get_interpretation")
+@patch("main.get_args")
 def test_main_test(mock_print, mock_get_args, mock_get_interpretation):
     signal = "11"
-    mock_get_args.return_value = {"signal": signal}
-    mock_get_interpretation.return_value = signal
-    assert mock_print.mock_calls == [call('11')]
+    args = {"signal": signal}
+    mock_get_args.return_value = args
+    #mock_get_interpretation.return_value = signal
+
+    main()
+
+    #mock_get_args.assert_called_with(None) # can't call with empty call
+    mock_get_interpretation.assert_called_with(mock_get_args.return_value) # this is wrong, should be args.signal
+    #assert mock_print.mock_calls == [call('11')] # should we test the print somehow?
