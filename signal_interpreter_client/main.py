@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 import argparse
-from server_communication_handler import post_message
+# from server_communication_handler import post_message
+from interpretation_layer import get_interpretation
 
-signal = "signal"
-parser = argparse.ArgumentParser()
-parser.add_argument("--{}".format(signal), required = True)
-args = parser.parse_args()
+validSignals = ["11", "27"]
 
-payload = {
-    signal: args.signal
-}
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--{}".format("signal"), required = True)
+    args = parser.parse_args()
+    signal = args.signal
+    if signal in validSignals:
+        interp = get_interpretation(signal)
+        print(interp)
 
-post_message("http://127.0.0.1:5000", payload)
+if __name__ == '__main__':
+    main()
