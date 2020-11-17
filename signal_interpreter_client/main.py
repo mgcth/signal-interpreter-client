@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 import argparse
-from interprate import get_interpretation
-from consts import *
+# from server_communication_handler import post_message
+from interpretation_layer import get_interpretation
+
+validSignals = ["11", "27"]
 
 def main():
-    args = get_args()
-    title = get_interpretation(args["signal"])
-    print(title)
-
-def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--{}".format(SIGNAL), required=True)
-    return parser.parse_args()
+    parser.add_argument("--{}".format("signal"), required = True)
+    args = parser.parse_args()
+    signal = args.signal
+    if signal in validSignals:
+        interp = get_interpretation(signal)
+        print(interp)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
