@@ -1,15 +1,20 @@
-# main.py Lec1 Afzalas-2
+# -*- coding: utf-8 -*-
 import argparse
-from server_communication_handler import post_message
+
+from interprate import get_interpretation
 
 
-signal = "signal"
-parser = argparse.ArgumentParser()   # object
-parser.add_argument("--signal", required=True, help='python main.py --signal "your message"')
-args = parser.parse_args()
+def main():
+    args = get_args()
+    title = get_interpretation(args.signal) # args.signal == "11", "27"
+    print(title)
 
-payload = {
-    signal: args.signal
-}
 
-post_message("http://127.0.0.1:5000", payload)
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--signal", required=True, help='python main.py --signal "your message"')
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    main()
