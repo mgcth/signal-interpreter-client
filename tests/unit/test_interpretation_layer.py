@@ -7,17 +7,21 @@ Current project: signal-interpreter-client
 
 
 """
-
+import pytest
 from unittest.mock import patch
-from interpretation_layer import get_interpretation, _url, _signal
+from signal_interpreter_client.interpretation_layer import get_interpretation, URL, SIGNAL
 
+# Use parametrisation here
+OK = "OK"
+@pytest.mark.parametrize("signal, expected_result", [
+    (888, None),# Test 1 if not string
+    ("11", OK)# Test 2 if string
+])
+@patch('signal_interpreter_client.interpretation_layer.post_message', return_value=OK)
+def test_get_interpretation(mock_post_message, signal, expected_result):
+    # Test 1/2
+    assert get_interpretation(signal) == expected_result
 
-@patch('interpretation_layer.post_message', return_value='OK')
-def test_get_interpretation(mock_post_message):
-    # Test 1: Only accept string as input:
-    assert get_interpretation(888) == None
-    # Test 2: Test if the format is ok:
-    dummy_sig = "11"
-    get_interpretation(dummy_sig)
-    mock_post_message.assert_called_with(_url,
-                                         {_signal: dummy_sig})
+    if isinstance(signal, str):
+        # Test 2 if string
+        mock_post_message.assert_called_with(URL, {SIGNAL: signal})

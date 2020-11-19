@@ -12,17 +12,10 @@ Current project: signal-interpreter-client
 from unittest.mock import patch
 import sys
 
-from signal_interpreter_client.main import main, init
+from main import main
 
 
-@patch("signal_interpreter_client.main.main")
-@patch("signal_interpreter_client.main.__name__", "__main__")
-def test_init(mock_main):
-    init()
-    mock_main.assert_called_once()
-
-
-@patch('signal_interpreter_client.main.get_interpretation')
+@patch('main.get_interpretation')
 def test_main(mock_get_interpretation):
     # If the signal is not in the valid signal list, then mock_get_interpretation should not be called
     with patch.object(sys, "argv", ["main.main", "--signal", "8888888"]):

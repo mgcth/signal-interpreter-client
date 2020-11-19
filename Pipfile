@@ -9,6 +9,11 @@ requests = "*"
 
 [dev-packages]
 pytest = "*"
+pylint = "*"
+invoke = "*"
+pycodestyle = "*"
+pytest-cov = "*"
+responses = "*"
 
 [requires]
 python_version = "3.9"
