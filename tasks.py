@@ -3,7 +3,7 @@ from invoke import task
 
 SRC_DIR = "signal_interpreter_client"
 TEST_DIR = "tests/unit"
-COV_PATH = ".coveragerc"
+COV_PATH = "..coveragerc"
 
 
 @task
