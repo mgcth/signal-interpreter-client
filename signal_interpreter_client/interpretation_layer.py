@@ -12,17 +12,22 @@ Current project: signal-interpreter-client
 
 
 """
-from server_communication_handler import post_message
+from signal_interpreter_client.server_communication_handler import post_message
 
-_signal = "signal"
-_url = "http://127.0.0.1:5000"
+SIGNAL = "signal"
+URL = "http://127.0.0.1:5000"
 
 
 def get_interpretation(signal: str):
-    if type(signal) != str:
+    """
+    Interpreter function.
+    :param signal:
+    :return:
+    """
+    if not isinstance(signal, str):
         return None
 
     payload = {
-        _signal: signal
+        SIGNAL: signal
     }
-    return post_message(_url, payload)
+    return post_message(URL, payload)
