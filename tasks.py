@@ -3,6 +3,7 @@ from invoke import task
 
 SRC_DIR = "signal_interpreter_client"
 TEST_DIR = "tests/unit"
+INTEGRATION_DIR = "tests/integration"
 COV_PATH = ".coveragerc"
 
 @task
@@ -18,4 +19,10 @@ def lint(_):
 @task
 def unit_test(_):
     cmd = f"python -m pytest {TEST_DIR} --cov {SRC_DIR} --cov-config={COV_PATH}"
+    subprocess.call(cmd, shell=True)
+
+# this is set to 78, because then we ignore full code coverage, is there a better way?
+@task
+def integration_test(_):
+    cmd = f"python -m pytest {INTEGRATION_DIR} --cov {SRC_DIR} --cov-config={COV_PATH} --cov-fail-under=78"
     subprocess.call(cmd, shell=True)
