@@ -32,6 +32,7 @@ def test_init(mock_main):
 RESPONSE = "ECU Reset"
 SIGNAL = "11"
 
+
 @patch.object(sys, "argv", ["signal-interpreter-client", "-s", SIGNAL])
 def test_get_signal_from_arguments():
     """
@@ -39,6 +40,7 @@ def test_get_signal_from_arguments():
     :return:
     """
     assert get_signal_from_arguments() == SIGNAL
+
 
 @patch("signal_interpreter_client.main.get_signal_from_arguments")
 @patch('signal_interpreter_client.main.get_interpretation')
