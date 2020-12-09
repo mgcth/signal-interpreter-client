@@ -7,32 +7,31 @@ Current project: signal-interpreter-client
 
 
 """
+# pylint: disable=missing-function-docstring
 import logging
-import pytest
 from unittest.mock import patch
-import json
+import pytest
 import requests
-from requests import Response
 import responses
 
-from signal_interpreter_client.interpretation_layer import URL, SIGNAL
+from signal_interpreter_client.interpretation_layer import URL
 from signal_interpreter_client.server_communication_handler import post_message
 from signal_interpreter_client.exceptions import SignalInterpreterClientError
 
 logger = logging.getLogger(__name__)
 
 
-RESP = "My response"
 @responses.activate
-def test_post_message_with_responses():
+def test_post_message_with_responses(responses_add_instance):
+    """
+    Test post message function.
+    :param responses_add_instance:
+    :return:
+    """
+    response = responses_add_instance  # this is the RESPONSE variable
+
     logger.debug("Start of %s function test log.", test_post_message_with_responses.__name__)
-    responses.add(
-        responses.POST,
-        URL,
-        json=RESP,
-        status=200
-    )
-    assert post_message(URL, payload={}) == RESP
+    assert post_message(URL, payload={}) == response
     logger.debug("End of %s function test log.", test_post_message_with_responses.__name__)
 
 
@@ -54,12 +53,19 @@ def test_post_message_with_responses():
 
 # signal does not matter here, could test more but why?
 @pytest.mark.parametrize("signal, exceptions", [
-    ("11", requests.exceptions.ConnectionError),# Test 1 connection error - user no internet
-    ("11", requests.exceptions.Timeout),# Test 2 server not responding - server down
-    ("Q", KeyError),# Test 2 if string but not in server - bad request
+    ("11", requests.exceptions.ConnectionError),  # Test 1 connection error - user no internet
+    ("11", requests.exceptions.Timeout),  # Test 2 server not responding - server down
+    ("Q", KeyError),  # Test 2 if string but not in server - bad request
 ])
 @patch('signal_interpreter_client.server_communication_handler.post')
 def test_post_message_width_side_effect(mock_post, signal, exceptions):
+    """
+    Test post message with side effects.
+    :param mock_post:
+    :param signal:
+    :param exceptions:
+    :return:
+    """
     logger.debug("Start of %s function test log.", test_post_message_width_side_effect.__name__)
     mock_post.side_effect = exceptions
     with pytest.raises(SignalInterpreterClientError):

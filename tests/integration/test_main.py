@@ -7,23 +7,21 @@ Current project: signal-interpreter-client
 
 
 """
+# pylint: disable=missing-function-docstring
 import logging
-import responses
-from unittest.mock import patch
 import sys
+from unittest.mock import patch
 import contextlib
 from io import StringIO
+import responses
 
-from signal_interpreter_client.interpretation_layer import URL
 from signal_interpreter_client.main import main
 
 logger = logging.getLogger(__name__)
 
-RESP = "ECU Reset"
-
 
 @responses.activate
-def test_main():
+def test_main(responses_add_instance):
     """
     Acceptance criteria
     Add test cases in signal interpreter client which tests the flow from starting the client from main.py to sending a
@@ -32,16 +30,12 @@ def test_main():
     Add the possibility to invoke integration tests in tasks.py but do not check the code coverage for integration tests
     :return:
     """
-    responses.add(
-        responses.POST,
-        URL,
-        json=RESP,
-        status=200
-    )
-    temp_stdout = StringIO()
-    with contextlib.redirect_stdout(temp_stdout):
+    response = responses_add_instance  # this is the RESPONSE variable
+
+    temporary_print_from_stdout = StringIO()
+    with contextlib.redirect_stdout(temporary_print_from_stdout):
         with patch.object(sys, "argv", ["main.main", "--signal", "11"]):
             main()
 
-    output = temp_stdout.getvalue().strip()
-    assert output == RESP
+    output = temporary_print_from_stdout.getvalue().strip()
+    assert output == response
