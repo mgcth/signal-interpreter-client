@@ -21,9 +21,9 @@ def post_message(url, payload):
     headers = {"content-type": "application/json"}
     try:
         logger.info("Posting message to server.")
-        server_resp = post(url, data=json.dumps(payload), headers=headers)
-        server_resp.raise_for_status()
-        response = server_resp.json()
+        server_response = post(url, data=json.dumps(payload), headers=headers)
+        server_response.raise_for_status()
+        response = server_response.json()
         logger.info("Response received %s.", response)
         return response
     except exceptions.Timeout as err:

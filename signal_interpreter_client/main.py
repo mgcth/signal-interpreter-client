@@ -14,16 +14,24 @@ logger = logging.getLogger(__name__)
 validSignals = ["11", "27"]
 
 
+def get_signal_from_arguments():
+    """
+    Parse arguments.
+    :return:
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--{}".format("signal"), required=True)
+    arguments = parser.parse_args()
+    return arguments.signal
+
+
 def main():
     """
     Entry point to program.
     :return:
     """
     logger.info("Program started.")
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--{}".format("signal"), required=True)
-    args = parser.parse_args()
-    signal = args.signal
+    signal = get_signal_from_arguments()
     logger.info("Entered signal request: %s", signal)
     interp = get_interpretation(signal)
     logger.info("Received title: %s", interp)

@@ -2,7 +2,8 @@ import subprocess
 from invoke import task
 
 SRC_DIR = "signal_interpreter_client"
-TEST_DIR = "tests/unit"
+TEST_DIR = "tests"
+UNIT_DIR = "tests/unit"
 INTEGRATION_DIR = "tests/integration"
 COV_PATH = ".coveragerc"
 
@@ -12,13 +13,23 @@ def style(_):
     subprocess.call(cmd, shell=True)
 
 @task
+def style_test(_):
+    cmd = f"pycodestyle {TEST_DIR} --ignore=E501"
+    subprocess.call(cmd, shell=True)
+
+@task
 def lint(_):
     cmd =  f"pylint {SRC_DIR}"
     subprocess.call(cmd, shell=True)
 
 @task
+def lint_test(_):
+    cmd =  f"pylint {TEST_DIR}"
+    subprocess.call(cmd, shell=True)
+
+@task
 def unit_test(_):
-    cmd = f"python -m pytest {TEST_DIR} --cov {SRC_DIR} --cov-config={COV_PATH}"
+    cmd = f"python -m pytest {UNIT_DIR} --cov {SRC_DIR} --cov-config={COV_PATH}"
     subprocess.call(cmd, shell=True)
 
 # this is set to 78, because then we ignore full code coverage, is there a better way?
