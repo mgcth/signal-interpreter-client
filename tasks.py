@@ -1,10 +1,11 @@
 import subprocess
+import os
 from invoke import task
 
 SRC_DIR = "signal_interpreter_client"
 TEST_DIR = "tests"
-UNIT_DIR = "tests/unit"
-INTEGRATION_DIR = "tests/integration"
+UNIT_DIR = os.path.join(TEST_DIR, "unit")
+INTEGRATION_DIR = os.path.join(TEST_DIR, "integration")
 COV_PATH = ".coveragerc"
 
 

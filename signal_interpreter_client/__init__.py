@@ -11,9 +11,11 @@ import logging.config
 import os
 import yaml
 
-PATH = "\\".join(os.path.dirname(__file__).split("/")[0:-1])
-LOG_CONFIG_PATH = os.path.join(PATH, "cfg\\", "log_config.yaml")
+CURR_DIR = os.path.abspath(os.path.dirname(__file__))
+CFG_DIR = os.path.join(CURR_DIR, "..", "cfg")
+LOG_CONFIG_PATH = os.path.join(CFG_DIR, "log_config.yaml")
 
+print(LOG_CONFIG_PATH)
 with open(LOG_CONFIG_PATH, "r") as f:
     config = yaml.safe_load(f.read())
     logging.config.dictConfig(config)
