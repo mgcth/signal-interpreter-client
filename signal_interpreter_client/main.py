@@ -4,12 +4,9 @@ Client program.
 """
 import logging
 import argparse
-# from server_communication_handler import post_message
 from signal_interpreter_client.interpretation_layer import get_interpretation
 
-
 logger = logging.getLogger(__name__)
-
 
 validSignals = ["11", "27"]
 

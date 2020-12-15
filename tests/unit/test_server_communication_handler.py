@@ -21,8 +21,9 @@ from signal_interpreter_client.exceptions import SignalInterpreterClientError
 
 logger = logging.getLogger(__name__)
 
-
 RESP = "My response"
+
+
 @responses.activate
 def test_post_message_with_responses():
     logger.debug("Start of %s function test log.", test_post_message_with_responses.__name__)
@@ -36,27 +37,11 @@ def test_post_message_with_responses():
     logger.debug("End of %s function test log.", test_post_message_with_responses.__name__)
 
 
-# Why include this in normal tests?
-# def test_post_message_withServerOn():
-#     '''
-#     In this test the post method is not mocked...This test only works when the server is on
-#     :return:
-#     '''
-#     logger.debug("Start of %s function test log.", test_post_message_withServerOn.__name__)
-#     try:
-#         assert post_message(URL, {SIGNAL: "11"}) == r"ECU Reset"
-#         assert post_message(URL, {SIGNAL: "27"}) == r"Security Access"
-#     except requests.exceptions.RequestException as error:
-#         print("Error: ", error)
-#         print("Server is not on. Cannot run this test.")
-#     logger.debug("End of %s function test log.", test_post_message_withServerOn.__name__)
-
-
 # signal does not matter here, could test more but why?
 @pytest.mark.parametrize("signal, exceptions", [
-    ("11", requests.exceptions.ConnectionError),# Test 1 connection error - user no internet
-    ("11", requests.exceptions.Timeout),# Test 2 server not responding - server down
-    ("Q", KeyError),# Test 2 if string but not in server - bad request
+    ("11", requests.exceptions.ConnectionError),  # Test 1 connection error - user no internet
+    ("11", requests.exceptions.Timeout),  # Test 2 server not responding - server down
+    ("Q", KeyError),  # Test 2 if string but not in server - bad request
 ])
 @patch('signal_interpreter_client.server_communication_handler.post')
 def test_post_message_width_side_effect(mock_post, signal, exceptions):

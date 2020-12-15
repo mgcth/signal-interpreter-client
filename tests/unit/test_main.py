@@ -15,7 +15,6 @@ from io import StringIO
 
 from signal_interpreter_client.main import main, init
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -29,16 +28,11 @@ def test_init(mock_main):
 
 
 RESP = "ECU Reset"
+
+
 @patch('signal_interpreter_client.main.get_interpretation')
 def test_main(mock_get_interpretation):
     logger.debug("Start of %s function test log.", test_main.__name__)
-    # If the signal is not in the valid signal list, then mock_get_interpretation should not be called
-    # Again moved this to post_message - so propagate bad signal all the way until server responds
-    #with patch.object(sys, "argv", ["main.main", "--signal", "8888888"]):
-    #    main()
-    #    assert not mock_get_interpretation.called
-
-    # Test if get_interpretation is called with the CLI input
     mock_get_interpretation.return_value = RESP
     temp_stdout = StringIO()
     with contextlib.redirect_stdout(temp_stdout):

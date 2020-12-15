@@ -12,15 +12,15 @@ import pytest
 from unittest.mock import patch
 from signal_interpreter_client.interpretation_layer import get_interpretation, URL, SIGNAL
 
-
 logger = logging.getLogger(__name__)
-
 
 # Use parametrisation here
 OK = "OK"
+
+
 @pytest.mark.parametrize("signal, expected_result", [
-    #(888, None),# Test 1 if not string
-    ("11", OK)# Test 2 if string
+    # (888, None),# Test 1 if not string
+    ("11", OK)  # Test 2 if string
 ])
 @patch('signal_interpreter_client.interpretation_layer.post_message', return_value=OK)
 def test_get_interpretation(mock_post_message, signal, expected_result):
