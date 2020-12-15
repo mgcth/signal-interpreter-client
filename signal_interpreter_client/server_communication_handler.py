@@ -7,7 +7,6 @@ import json
 from requests import post, exceptions
 from signal_interpreter_client.exceptions import SignalInterpreterClientError
 
-
 logger = logging.getLogger(__name__)
 
 
