@@ -15,9 +15,7 @@ Current project: signal-interpreter-client
 import logging
 from signal_interpreter_client.server_communication_handler import post_message
 
-
 logger = logging.getLogger(__name__)
-
 
 SIGNAL = "signal"
 URL = "http://127.0.0.1:5000"

@@ -13,7 +13,6 @@ from unittest.mock import patch
 import pytest
 import requests
 import responses
-
 from signal_interpreter_client.interpretation_layer import URL
 from signal_interpreter_client.server_communication_handler import post_message
 from signal_interpreter_client.exceptions import SignalInterpreterClientError
@@ -33,22 +32,6 @@ def test_post_message_with_responses(responses_add_instance):
     logger.debug("Start of %s function test log.", test_post_message_with_responses.__name__)
     assert post_message(URL, payload={}) == response
     logger.debug("End of %s function test log.", test_post_message_with_responses.__name__)
-
-
-# Why include this in normal tests?
-# def test_post_message_withServerOn():
-#     '''
-#     In this test the post method is not mocked...This test only works when the server is on
-#     :return:
-#     '''
-#     logger.debug("Start of %s function test log.", test_post_message_withServerOn.__name__)
-#     try:
-#         assert post_message(URL, {SIGNAL: "11"}) == r"ECU Reset"
-#         assert post_message(URL, {SIGNAL: "27"}) == r"Security Access"
-#     except requests.exceptions.RequestException as error:
-#         print("Error: ", error)
-#         print("Server is not on. Cannot run this test.")
-#     logger.debug("End of %s function test log.", test_post_message_withServerOn.__name__)
 
 
 # signal does not matter here, could test more but why?
